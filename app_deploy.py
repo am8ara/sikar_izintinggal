@@ -8,7 +8,7 @@ import time
 
 # --- Konfigurasi Halaman & API Key ---
 st.set_page_config(page_title="Sistem Pakar Imigrasi", layout="wide")
-st.title("🇮🇩 Sistem Pakar Keimigrasian Indonesia")
+st.title("🇮🇩 Sistem Pakar Izin Tinggal Keimigrasian Indonesia")
 
 # Menggunakan st.secrets untuk deploy, atau sidebar untuk input lokal
 try:
@@ -30,6 +30,7 @@ DATABASE_QA = [
     {"pertanyaan": "Berapa denda overstay?", "jawaban": "Denda overstay berdasarkan Pasal 78 UU No. 6 Tahun 2011 adalah Rp1.000.000 per hari untuk keterlambatan di bawah 60 hari."},
     {"pertanyaan": "Siapa saja yang bisa dapat izin tinggal tetap?", "jawaban": "Menurut Pasal 54 UU No. 6/2011, ITAP dapat diberikan kepada Orang Asing pemegang ITAS, keluarga karena perkawinan campuran, dan investor."},
     {"pertanyaan": "Untuk apa Visa Kunjungan digunakan?", "jawaban": "Visa Kunjungan diberikan kepada Orang Asing untuk tujuan seperti pariwisata, keluarga, sosial, seni dan budaya, serta tugas pemerintahan non-komersial."},
+    {"pertanyaan": "Bagaimana saya dapat mengajukan permohonan izin tinggal keimigrasian?", "jawaban": "Sejak 18 Desember 2024 semua layanan Izin Tinggal Keimigrasian untuk Warga Negara Asing diajukan secara online melalui website evisa.imigrasi.go.id."},
 ]
 
 # --- Contoh Statis untuk Prompt ---
@@ -135,4 +136,5 @@ if index_dokumen and index_qa:
             
             st.divider()
             st.subheader("Jawaban")
+
             st.markdown(response.text)
