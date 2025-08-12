@@ -1,6 +1,7 @@
 import streamlit as st
 import os
 import faiss
+import json
 import numpy as np
 import google.generativeai as genai
 from pypdf import PdfReader
@@ -26,12 +27,13 @@ except (FileNotFoundError, KeyError):
 FOLDER_DOKUMEN = 'dokumen_hukum'
 
 # --- Database Q&A ---
-DATABASE_QA = [
-    {"pertanyaan": "Berapa denda overstay?", "jawaban": "Denda overstay berdasarkan Pasal 78 UU No. 6 Tahun 2011 adalah Rp1.000.000 per hari untuk keterlambatan di bawah 60 hari."},
-    {"pertanyaan": "Siapa saja yang bisa dapat izin tinggal tetap?", "jawaban": "Menurut Pasal 54 UU No. 6/2011, ITAP dapat diberikan kepada Orang Asing pemegang ITAS, keluarga karena perkawinan campuran, dan investor."},
-    {"pertanyaan": "Untuk apa Visa Kunjungan digunakan?", "jawaban": "Visa Kunjungan diberikan kepada Orang Asing untuk tujuan seperti pariwisata, keluarga, sosial, seni dan budaya, serta tugas pemerintahan non-komersial."},
-    {"pertanyaan": "Bagaimana saya dapat mengajukan permohonan izin tinggal keimigrasian?", "jawaban": "Sejak 18 Desember 2024 semua layanan Izin Tinggal Keimigrasian untuk Warga Negara Asing diajukan secara online melalui website evisa.imigrasi.go.id."},
-]
+try:
+    with open('database_qa.json', 'r', encoding='utf-8') as f:
+        DATABASE_QA = json.load(f)
+except FileNotFoundError:
+    st.error("File 'database_qa.json' tidak ditemukan. Harap buat file tersebut.")
+    # Provide a default empty list so the app doesn't crash
+    DATABASE_QA = []
 
 # --- Contoh Statis untuk Prompt ---
 FEW_SHOT_EXAMPLES = "--- CONTOH CARA MENJAWAB ---\nPertanyaan: Apa itu penjamin?\nJawaban: Penjamin adalah orang atau korporasi yang bertanggung jawab atas keberadaan dan kegiatan Orang Asing selama berada di Wilayah Indonesia.\n--- AKHIR CONTOH ---"
@@ -138,3 +140,4 @@ if index_dokumen and index_qa:
             st.subheader("Jawaban")
 
             st.markdown(response.text)
+
