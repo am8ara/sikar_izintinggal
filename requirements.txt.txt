@@ -1,7 +1,0 @@
-streamlit
-google-generativeai
-faiss-cpu
-pypdf
-langchain
-langchain_experimental
-# Kita tidak lagi butuh langchain-google karena wrapper custom kita
