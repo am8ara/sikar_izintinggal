@@ -84,7 +84,13 @@ def muat_dan_bangun_index():
     st.write(f"✅ Index Dokumen berhasil dibuat dengan {len(semua_potongan)} potongan.")
 
     # 2. Proses Database Q&A
-    questions_qa = [item['pertanyaan'] for item in DATABASE_QA]
+    questions_qa = []
+    for item in DATABASE_QA:
+        if "pertanyaan" in item and item["pertanyaan"]:
+            questions_qa.append(item["pertanyaan"])
+        else:
+        # This will show a warning in your app for any bad data, instead of crashing.
+        st.warning(f"Melewatkan entri Q&A yang tidak valid atau kosong: {item}")
     embeddings_qa = genai.embed_content(model="models/text-embedding-004", content=questions_qa, task_type="RETRIEVAL_DOCUMENT")["embedding"]
     index_qa = faiss.IndexFlatL2(np.array(embeddings_qa).shape[1])
     index_qa.add(np.array(embeddings_qa, dtype='float32'))
@@ -151,5 +157,6 @@ if index_dokumen and index_qa:
             st.subheader("Jawaban")
 
             st.markdown(response.text)
+
 
 
