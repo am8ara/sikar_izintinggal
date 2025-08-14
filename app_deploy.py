@@ -7,6 +7,17 @@ import google.generativeai as genai
 from pypdf import PdfReader
 import time
 
+# --- KODE DIAGNOSIS SEMENTARA ---
+st.subheader("Pengecekan File di Server:")
+try:
+    # List semua file dan folder di direktori utama
+    files_in_directory = os.listdir('.')
+    st.code("\n".join(files_in_directory))
+except Exception as e:
+    st.error(f"Gagal membaca direktori: {e}")
+st.divider()
+# --- AKHIR KODE DIAGNOSIS ---
+
 # --- Konfigurasi Halaman & API Key ---
 st.set_page_config(page_title="Sistem Pakar Imigrasi", layout="wide")
 st.title("🇮🇩 Sistem Pakar Izin Tinggal Keimigrasian Indonesia")
@@ -140,4 +151,5 @@ if index_dokumen and index_qa:
             st.subheader("Jawaban")
 
             st.markdown(response.text)
+
 
