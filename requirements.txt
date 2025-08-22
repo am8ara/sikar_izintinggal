@@ -2,5 +2,7 @@ streamlit
 google-generativeai
 faiss-cpu
 pypdf
+pptx
 langchain
+
 langchain_experimental
