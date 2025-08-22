@@ -5,6 +5,7 @@ import json
 import numpy as np
 import google.generativeai as genai
 from pypdf import PdfReader
+from pptx import Presentation
 import time
 
 # --- KODE DIAGNOSIS SEMENTARA ---
@@ -53,28 +54,44 @@ FEW_SHOT_EXAMPLES = "--- CONTOH CARA MENJAWAB ---\nPertanyaan: Apa itu penjamin?
 
 @st.cache_resource
 def muat_dan_bangun_index():
-    """Fungsi ini hanya akan dijalankan sekali untuk memuat semua data dan index."""
+    """Fungsi ini sekarang akan memuat 3 sumber data: Dokumen (PDF & PPTX), Q&A, dan Tabel."""
     st.info("Memulai proses muat data dan pembangunan index (hanya sekali)...")
     
-    # 1. Proses Dokumen PDF
+    # 1. Proses Dokumen (PDF & PPTX)
     from langchain.text_splitter import RecursiveCharacterTextSplitter
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=2000, chunk_overlap=400)
     semua_potongan = []
+    
     for filename in os.listdir(FOLDER_DOKUMEN):
-        if filename.endswith('.pdf'):
-            try:
-                file_path = os.path.join(FOLDER_DOKUMEN, filename)
+        teks_lengkap = ""
+        file_path = os.path.join(FOLDER_DOKUMEN, filename)
+        
+        try:
+            # Handle PDF files
+            if filename.endswith('.pdf'):
                 reader = PdfReader(file_path)
                 teks_lengkap = "".join(page.extract_text() or "" for page in reader.pages)
-                if teks_lengkap:
-                    potongan_teks = text_splitter.split_text(teks_lengkap)
-                    for pot in potongan_teks:
-                        semua_potongan.append({"sumber": filename, "konten": pot})
-            except Exception:
-                pass
+            
+            # --- BAGIAN BARU: Handle PowerPoint files ---
+            elif filename.endswith('.pptx'):
+                prs = Presentation(file_path)
+                for slide in prs.slides:
+                    for shape in slide.shapes:
+                        if hasattr(shape, "text"):
+                            teks_lengkap += shape.text + "\n"
+            # -------------------------------------------
+
+            if teks_lengkap:
+                potongan_teks = text_splitter.split_text(teks_lengkap)
+                for pot in potongan_teks:
+                    semua_potongan.append({"sumber": filename, "konten": pot})
+
+        except Exception as e:
+            st.warning(f"Gagal memproses file {filename}: {e}")
     
     if not semua_potongan:
         st.error("Tidak ada dokumen yang bisa diproses.")
+        # Return enough None values to match the expected output
         return None, None, None, None
 
     konten_dokumen = [doc['konten'] for doc in semua_potongan]
@@ -157,6 +174,7 @@ if index_dokumen and index_qa:
             st.subheader("Jawaban")
 
             st.markdown(response.text)
+
 
 
 
