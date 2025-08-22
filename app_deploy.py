@@ -38,14 +38,29 @@ except (FileNotFoundError, KeyError):
 
 FOLDER_DOKUMEN = 'dokumen_hukum'
 
-# --- Database Q&A ---
-try:
-    with open('database_qa.json', 'r', encoding='utf-8') as f:
-        DATABASE_QA = json.load(f)
-except FileNotFoundError:
-    st.error("File 'database_qa.json' tidak ditemukan. Harap buat file tersebut.")
-    # Provide a default empty list so the app doesn't crash
-    DATABASE_QA = []
+# --- Database Q&A (Loads all .json files from a folder) ---
+FOLDER_QA = 'qa_databases'
+DATABASE_QA = []
+
+# Check if the folder exists
+if os.path.isdir(FOLDER_QA):
+    # Loop through every file in the folder
+    for filename in os.listdir(FOLDER_QA):
+        # Check if the file is a JSON file
+        if filename.endswith('.json'):
+            file_path = os.path.join(FOLDER_QA, filename)
+            try:
+                with open(file_path, 'r', encoding='utf-8') as f:
+                    # Load the Q&A pairs from the file
+                    qa_pairs = json.load(f)
+                    # Add them to the main database list
+                    DATABASE_QA.extend(qa_pairs)
+            except Exception as e:
+                st.error(f"Gagal memuat atau memproses file Q&A '{filename}': {e}")
+else:
+    st.warning(f"Folder '{FOLDER_QA}' tidak ditemukan. Database Q&A tidak akan dimuat.")
+
+st.sidebar.success(f"Berhasil memuat {len(DATABASE_QA)} entri Q&A dari folder '{FOLDER_QA}'.")
 
 # --- Contoh Statis untuk Prompt ---
 FEW_SHOT_EXAMPLES = "--- CONTOH CARA MENJAWAB ---\nPertanyaan: Apa itu penjamin?\nJawaban: Penjamin adalah orang atau korporasi yang bertanggung jawab atas keberadaan dan kegiatan Orang Asing selama berada di Wilayah Indonesia.\n--- AKHIR CONTOH ---"
@@ -174,6 +189,7 @@ if index_dokumen and index_qa:
             st.subheader("Jawaban")
 
             st.markdown(response.text)
+
 
 
 
