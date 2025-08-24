@@ -26,5 +26,34 @@
     {
         "pertanyaan": "Berapa Biaya Perpanjangan VOA?",
         "jawaban": "Rp. 500.000,-"
+    },
+    {
+        "pertanyaan": "Apa itu ABTC?",
+        "jawaban": "ABTC adalah Kartu Perjalanan Pebisnis yang berlaku di negara-negara anggota APEC yang menerapkan skema KPP APEC sebanyak 19 negara anggota."
+    },
+    {
+        "pertanyaan": "Berapa biaya pengurusan ABTC?",
+        "jawaban": "Biaya untuk pengurusan ABTC adalah sebagai berikut: 1. Membayar biaya keimigrasian sebesar Rp. 2.500.000,- (dua juta lima ratus ribu rupiah), dan 2. Jika kartu hilang atau rusak dan kartu masih berlaku maka biaya keimigrasian yang harus dibayarkan sebesar Rp. 3.500.000,- (tiga juta lima ratus ribu rupiah)."
+    },
+    {
+        "pertanyaan": "Berapa lama waktu penyelesaian ABTC dan masa berlakunya?",
+        "jawaban": "Untuk waktu penyelesaian proses ABTC sekitar 6 bulan atau lebih. Lama proses tergantung dari pemberian persetujuan (approval) 18 negara anggota ABTC lainya. Sedangkan untuk masa berlaku ABTC sejak September 2015 adalah 5 tahun dan tidak melebihi masa berlaku paspor."
+    },
+    {
+        "pertanyaan": "Di mana saya bisa mengajukan pengurusan ABTC?",
+        "jawaban": "Pengurusan ABTC dapat diajukan pada Sub Direktorat Visa Direktorat Lalu Lintas Keimigrasian Lantai dasar Gedung Direktorat Jenderal Imigrasi Jl. H.R. Rasuna Said Blok. X-6 KAv. 8 Kuningan Jakarta Selatan."
+    },
+    {
+        "pertanyaan": "Negara apa saja yang menerapkan skema ABTC?",
+        "jawaban": "Negara yang menerapkan ABTC yaitu negara yang tergabung dalam Asia Pacific Economic Cooperation (APEC), antara lain: Amerika Serikat, Australia, Brunei Darussalam, Cile, Filipina, Hong Kong, Indonesia, Japan, Kanada, Korea, Malaysia, Meksiko, Papua Nugini, Peru, Rusia, Selandia Baru, Singapura, Taiwan, Thailand, Tiongkok/China, Vietnam"
+    },
+    {
+        "pertanyaan": "Daftar Negara, Pemerintah Dari Daerah Administrasi Khusus Suatu Negara, dan Entitas Tertentu subjek Calling Visa",
+        "jawaban": "Afganistan, Israel, Korea Utara, Liberia, Nigeria, Somalia"
+    },
+    {
+        "pertanyaan": "Daftar Negara, Pemerintah Dari Daerah Administrasi Khusus Suatu Negara, dan Entitas Tertentu subjek BVK atau Bebas Visa Kunjungan",
+        "jawaban": "Brunei Darussalam, Malaysia, Thailand, Vietnam, Philipina, Kamboja, Singapura, Myanmar, Laos, Timor Leste, Suriname, Kolombia, Hong Kong, Turki, Brazil, Peru, Warga Negara Asing pemegang permanent resident Singapura yang melalui Tempat Pemeriksaan Imigrasi tertentu."
     }
+
 ]
