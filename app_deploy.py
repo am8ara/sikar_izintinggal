@@ -10,14 +10,14 @@ import time
 import base64
 
 # --- KODE DIAGNOSIS SEMENTARA ---
-st.subheader("Pengecekan File di Server:")
-try:
+#st.subheader("Pengecekan File di Server:")
+#try:
     # List semua file dan folder di direktori utama
-    files_in_directory = os.listdir('.')
-    st.code("\n".join(files_in_directory))
-except Exception as e:
-    st.error(f"Gagal membaca direktori: {e}")
-st.divider()
+#    files_in_directory = os.listdir('.')
+#    st.code("\n".join(files_in_directory))
+#except Exception as e:
+#    st.error(f"Gagal membaca direktori: {e}")
+#st.divider()
 # --- AKHIR KODE DIAGNOSIS ---
 
 # --- Konfigurasi Halaman & API Key ---
@@ -228,6 +228,7 @@ if index_dokumen and index_qa:
             st.subheader("Jawaban")
 
             st.markdown(response.text)
+
 
 
 
