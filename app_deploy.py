@@ -7,6 +7,7 @@ import google.generativeai as genai
 from pypdf import PdfReader
 from pptx import Presentation
 import time
+import base64
 
 # --- KODE DIAGNOSIS SEMENTARA ---
 st.subheader("Pengecekan File di Server:")
@@ -22,6 +23,33 @@ st.divider()
 # --- Konfigurasi Halaman & API Key ---
 st.set_page_config(page_title="Sistem Pakar Imigrasi", layout="wide")
 st.title("🇮🇩 Sistem Pakar Izin Tinggal Keimigrasian Indonesia")
+
+# --- BACKGROUND SETTINGS ---
+# Replace 'background.png' with the name of your image file in the same folder.
+
+@st.cache_data
+def get_base64_of_bin_file(bin_file):
+    with open(bin_file, 'rb') as f:
+        data = f.read()
+    return base64.b64encode(data).decode()
+
+def set_png_as_page_bg(png_file):
+    bin_str = get_base64_of_bin_file(png_file)
+    page_bg_img = f'''
+    <style>
+    .stApp {{
+    background-image: url("data:image/png;base64,{bin_str}");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: scroll; /* or 'fixed' */
+    }}
+    </style>
+    '''
+    st.markdown(page_bg_img, unsafe_allow_html=True)
+
+# Call this function with your image file name
+set_png_as_page_bg('logo_imigrasi.png')
+# --- END OF BACKGROUND SETTINGS ---
 
 # Menggunakan st.secrets untuk deploy, atau sidebar untuk input lokal
 try:
@@ -189,6 +217,7 @@ if index_dokumen and index_qa:
             st.subheader("Jawaban")
 
             st.markdown(response.text)
+
 
 
 
