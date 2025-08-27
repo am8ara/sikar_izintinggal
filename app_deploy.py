@@ -39,9 +39,20 @@ def set_png_as_page_bg(png_file):
     <style>
     .stApp {{
     background-image: url("data:image/png;base64,{bin_str}");
-    background-size: cover;
+    background-size: cover; /* This makes the image cover the whole page */
     background-repeat: no-repeat;
-    background-attachment: scroll; /* or 'fixed' */
+    background-attachment: fixed; /* Keeps the background fixed while scrolling */
+    }}
+
+    /* Add an overlay with 50% transparency */
+    .stApp::before {{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.5); /* White overlay with 50% opacity */
     }}
     </style>
     '''
@@ -217,6 +228,7 @@ if index_dokumen and index_qa:
             st.subheader("Jawaban")
 
             st.markdown(response.text)
+
 
 
 
