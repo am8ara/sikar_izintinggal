@@ -1,0 +1,186 @@
+[
+    {
+        "pertanyaan": "Biaya Visa Kunjungan Satu Kali Perjalanan Paling Lama 7 Hari?",
+        "jawaban": "Rp 250.000,-"
+    },
+    {
+        "pertanyaan": "Biaya Visa Kunjungan Satu Kali Perjalanan Paling Lama 14 Hari?",
+        "jawaban": "Rp 350.000,-"
+    },
+    {
+        "pertanyaan": "Biaya Visa Kunjungan Satu Kali Perjalanan Paling Lama 30 Hari?",
+        "jawaban": "Rp 500.000,-"
+    },
+    {
+        "pertanyaan": "Biaya Visa Kunjungan Satu Kali Perjalanan Paling Lama 60 Hari?",
+        "jawaban": "Rp 1.000.000,-"
+    },
+    {
+        "pertanyaan": "Biaya Visa Kunjungan Satu Kali Perjalanan Paling Lama 90 Hari?",
+        "jawaban": "Rp. 1.500.000,-"
+    },
+    {
+        "pertanyaan": "Biaya Visa Kunjungan Satu Kali Perjalanan Paling Lama 180 Hari?",
+        "jawaban": "Rp. 2.000.000,-"
+    },
+    {
+        "pertanyaan": "Biaya Visa Kunjungan Beberapa Kali Perjalanan Paling Lama 60 Hari?",
+        "jawaban": "Rp. 1.500.000,-"
+    },
+    {
+        "pertanyaan": "Biaya Visa Kunjungan Beberapa Kali Perjalanan Paling Lama 90 Hari?",
+        "jawaban": "Rp. 2.000.000,-"
+    },
+    {
+        "pertanyaan": "Biaya Visa Kunjungan Beberapa Kali Perjalanan Paling Lama 180 Hari?",
+        "jawaban": "Rp. 2.500.000,-"
+    },
+    {
+        "pertanyaan": "Biaya Visa Kunjungan Beberapa Kali Perjalanan Paling Lama 1 Tahun?",
+        "jawaban": "Rp. 3.000.000,-"
+    },
+    {
+        "pertanyaan": "Biaya Visa Kunjungan Beberapa Kali Perjalanan Paling Lama 2 Tahun?",
+        "jawaban": "Rp. 5.000.000,-"
+    },
+    {
+        "pertanyaan": "Biaya Visa Kunjungan Beberapa Kali Perjalanan Paling Lama 5 Tahun?",
+        "jawaban": "Rp. 10.000.000,-"
+    },
+    {
+        "pertanyaan": "Biaya Visa Kunjungan Beberapa Kali Perjalanan Paling Lama 10 Tahun?",
+        "jawaban": "Rp. 15.000.000,-"
+    },
+    {
+        "pertanyaan": "Biaya permohonan Visa Tinggal Terbatas?",
+        "jawaban": "Rp. 500.000,-"
+    },
+    {
+        "pertanyaan": "Biaya Verifikasi Visa untuk Tujuan Tertentu Kategori I?",
+        "jawaban": "Rp. 1.000.000,-"
+    },
+    {
+        "pertanyaan": "Biaya Verifikasi Visa untuk Tujuan Tertentu Kategori II?",
+        "jawaban": "Rp. 2.000.000,-"
+    },
+    {
+        "pertanyaan": "Biaya Verifikasi Visa untuk Tujuan Tertentu Kategori III?",
+        "jawaban": "Rp. 8.000.000,-"
+    },
+    {
+        "pertanyaan": "Biaya Izin Tinggal Kunjungan Masa Berlaku Paling Lama 7 Hari?",
+        "jawaban": "Rp 250.000,-"
+    },
+    {
+        "pertanyaan": "Biaya Izin Tinggal Kunjungan Masa Berlaku Paling Lama 14 Hari?",
+        "jawaban": "Rp 350.000,-"
+    },
+    {
+        "pertanyaan": "Biaya Izin Tinggal Kunjungan Masa Berlaku Paling Lama 30 Hari?",
+        "jawaban": "Rp 500.000,-"
+    },
+    {
+        "pertanyaan": "Biaya Izin Tinggal Kunjungan Masa Berlaku Paling Lama 60 Hari?",
+        "jawaban": "Rp 1.000.000,-"
+    },
+    {
+        "pertanyaan": "Biaya Izin Tinggal Kunjungan Masa Berlaku Paling Lama 90 Hari?",
+        "jawaban": "Rp. 1.500.000,-"
+    },
+    {
+        "pertanyaan": "Biaya Izin Tinggal Kunjungan Masa Berlaku Paling Lama 180 Hari?",
+        "jawaban": "Rp. 2.000.000,-"
+    },
+    {
+        "pertanyaan": "Biaya lzin Tinggal Terbatas Masa Berlaku Paling Lama 30 Hari?",
+        "jawaban": "Rp. 500.000,-"
+    },
+    {
+        "pertanyaan": "Biaya lzin Tinggal Terbatas Masa Berlaku Paling Lama 60 Hari?",
+        "jawaban": "Rp. 1.000.000,-"
+    },
+    {
+        "pertanyaan": "Biaya lzin Tinggal Terbatas Masa Berlaku Paling Lama 90 Hari?",
+        "jawaban": "Rp. 1.500.000,-"
+    },
+    {
+        "pertanyaan": "Biaya lzin Tinggal Terbatas Masa Berlaku Paling Lama 6 Bulan?",
+        "jawaban": "Rp. 2.000.000,-"
+    },
+    {
+        "pertanyaan": "Biaya lzin Tinggal Terbatas Masa Berlaku Paling Lama 1 Tahun?",
+        "jawaban": "Rp. 3.000.000,-"
+    },
+    {
+        "pertanyaan": "Biaya lzin Tinggal Terbatas Masa Berlaku Paling Lama 2 Tahun?",
+        "jawaban": "Rp. 5.000.000,-"
+    },
+    {
+        "pertanyaan": "Biaya lzin Tinggal Terbatas Masa Berlaku Paling Lama 5 Tahun?",
+        "jawaban": "Rp. 7.000.000,-"
+    },
+    {
+        "pertanyaan": "Biaya lzin Tinggal Terbatas Masa Berlaku Paling Lama 10 Tahun?",
+        "jawaban": "Rp. 12.000.000,-"
+    },
+    {
+        "pertanyaan": "Biaya lzin Tinggal Tetap Masa Berlaku Paling Lama 5 Tahun?",
+        "jawaban": "Rp. 7.000.000,-"
+    },
+    {
+        "pertanyaan": "Biaya lzin Tinggal Tetap Masa Berlaku Paling Lama 10 Tahun?",
+        "jawaban": "Rp. 12.000.000,-"
+    },
+    {
+        "pertanyaan": "Biaya lzin Tinggal Tetap untuk Jangka Waktu Tidak Terbatas?",
+        "jawaban": "Rp. 15.000.000,-"
+    },
+    {
+        "pertanyaan": "Biaya lzin Masuk Kembali Masa Berlaku Paling Lama 30 Hari?",
+        "jawaban": "Rp. 300.000,-"
+    },
+    {
+        "pertanyaan": "Biaya lzin Masuk Kembali Masa Berlaku Paling Lama 60 Hari?",
+        "jawaban": "Rp. 400.000,-"
+    },
+    {
+        "pertanyaan": "Biaya lzin Masuk Kembali Masa Berlaku Paling Lama 90 Hari?",
+        "jawaban": "Rp. 500.000,-"
+    },
+    {
+        "pertanyaan": "Biaya lzin Masuk Kembali Masa Berlaku Paling Lama 6 Bulan?",
+        "jawaban": "Rp. 750.000,-"
+    },
+    {
+        "pertanyaan": "Biaya lzin Masuk Kembali Masa Berlaku Paling Lama 1 Tahun?",
+        "jawaban": "Rp. 1.500.000,-"
+    },
+    {
+        "pertanyaan": "Biaya lzin Masuk Kembali Masa Berlaku Paling Lama 2 Tahun?",
+        "jawaban": "Rp. 2.000.000,-"
+    },
+    {
+        "pertanyaan": "Biaya lzin Masuk Kembali Masa Berlaku Paling Lama 5 Tahun?",
+        "jawaban": "Rp. 3.500.000,-"
+    },
+    {
+        "pertanyaan": "Biaya lzin Masuk Kembali Masa Berlaku Paling Lama 10 Tahun?",
+        "jawaban": "Rp. 5.000.000,-"
+    },
+    {
+        "pertanyaan": "Biaya lzin Masuk Kembali untuk Jangka Waktu Tidak Terbatas?",
+        "jawaban": "Rp. 8.000.000,-"
+    },
+    {
+        "pertanyaan": "Biaya lzin Meninggalkan wilayah Indonesia untuk tidak Kembali (Exit Permit Only)?",
+        "jawaban": "Rp. 100.000,-"
+    },
+    {
+        "pertanyaan": "Biaya Permohonan AFFIDAVIT untuk Anak Kewarganegaraan Ganda?",
+        "jawaban": "Rp. 500.000,-"
+    },
+    {
+        "pertanyaan": "Biaya Denda Overstay?",
+        "jawaban": "Rp. 1.000.000,- per hari"
+    }
+]
