@@ -39,12 +39,15 @@ def set_png_as_page_bg(png_file):
     <style>
     .stApp {{
     background-image: url("data:image/png;base64,{bin_str}");
-    background-size: cover; /* This makes the image cover the whole page */
+    background-size: contain; /* Changed to 'contain' to show the full image */
     background-repeat: no-repeat;
+    background-position: center; /* Centers the image */
     background-attachment: fixed; /* Keeps the background fixed while scrolling */
+    /* If you want the background to be transparent, use a PNG with transparency.
+       For a logo, usually you want it fully opaque, so we remove the overlay. */
     }}
 
-    /* Add an overlay with 50% transparency */
+    /* Hapus bagian ini jika Anda ingin logo tampil penuh tanpa overlay transparan
     .stApp::before {{
     content: "";
     position: absolute;
@@ -54,6 +57,7 @@ def set_png_as_page_bg(png_file):
     bottom: 0;
     background-color: rgba(255, 255, 255, 0.5); /* White overlay with 50% opacity */
     }}
+    */
     </style>
     '''
     st.markdown(page_bg_img, unsafe_allow_html=True)
@@ -228,6 +232,7 @@ if index_dokumen and index_qa:
             st.subheader("Jawaban")
 
             st.markdown(response.text)
+
 
 
 
