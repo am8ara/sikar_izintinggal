@@ -33,34 +33,34 @@ def get_base64_of_bin_file(bin_file):
         data = f.read()
     return base64.b64encode(data).decode()
 
-def set_png_as_page_bg(png_file):
+def set_page_bg_and_style(png_file):
     bin_str = get_base64_of_bin_file(png_file)
-    page_bg_img = f'''
+    page_bg_img_styled = f'''
     <style>
+    /* Setting the main page background */
     .stApp {{
     background-image: url("data:image/png;base64,{bin_str}");
-    background-size: contain; /* Changed to 'contain' to show the full image */
+    background-size: contain;
     background-repeat: no-repeat;
-    background-position: center; /* Centers the image */
-    background-attachment: fixed; /* Keeps the background fixed while scrolling */
-    /* If you want the background to be transparent, use a PNG with transparency.
-       For a logo, usually you want it fully opaque, so we remove the overlay. */
+    background-position: center;
+    background-attachment: fixed;
     }}
 
-    /* Hapus bagian ini jika Anda ingin logo tampil penuh tanpa overlay transparan
-    .stApp::before {{
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(255, 255, 255, 0.5); /* White overlay with 50% opacity */
+    /* === BAGIAN BARU: Memberi latar belakang pada area konten utama === */
+    [data-testid="stAppViewContainer"] > .main .block-container {{
+    background-color: rgba(10, 15, 30, 0.85); /* Warna biru tua dengan 85% opacity */
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* Optional: adds a subtle shadow */
     }}
-    */
+
+    /* Optional: Make the title text white and clear */
+    .stApp h1 {{
+    color: #FFFFFF;
+    }}
     </style>
     '''
-    st.markdown(page_bg_img, unsafe_allow_html=True)
+    st.markdown(page_bg_img_styled, unsafe_allow_html=True)
 
 # Call this function with your image file name
 set_png_as_page_bg('logo_imigrasi.png')
@@ -232,6 +232,7 @@ if index_dokumen and index_qa:
             st.subheader("Jawaban")
 
             st.markdown(response.text)
+
 
 
 
