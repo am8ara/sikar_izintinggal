@@ -62,9 +62,9 @@ def set_page_bg_and_style(png_file):
     '''
     st.markdown(page_bg_img_styled, unsafe_allow_html=True)
 
-# Call this function with your image file name
-set_png_as_page_bg('logo_imigrasi.png')
-# --- END OF BACKGROUND SETTINGS ---
+# Ganti 'logo_imigrasi.png' dengan nama file logo Anda
+set_page_bg_and_style('logo_imigrasi.png')
+# --- END OF STYLING ---
 
 # Menggunakan st.secrets untuk deploy, atau sidebar untuk input lokal
 try:
@@ -232,6 +232,7 @@ if index_dokumen and index_qa:
             st.subheader("Jawaban")
 
             st.markdown(response.text)
+
 
 
 
