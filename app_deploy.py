@@ -57,7 +57,7 @@ def set_custom_style():
     st.markdown(custom_style, unsafe_allow_html=True)
 
 # Ganti 'logo_imigrasi.png' dengan nama file logo Anda
-set_page_bg_and_style('logo_imigrasi.png')
+set_custom_style('logo_imigrasi.png')
 # --- END OF STYLING ---
 
 # Menggunakan st.secrets untuk deploy, atau sidebar untuk input lokal
@@ -226,6 +226,7 @@ if index_dokumen and index_qa:
             st.subheader("Jawaban")
 
             st.markdown(response.text)
+
 
 
 
