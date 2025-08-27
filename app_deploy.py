@@ -48,7 +48,7 @@ def set_page_bg_and_style(png_file):
 
     /* === BAGIAN BARU: Memberi latar belakang pada area konten utama === */
     [data-testid="stAppViewContainer"] > .main .block-container {{
-    background-color: rgba(10, 15, 30, 0.85); /* Warna biru tua dengan 85% opacity */
+    background-color: rgba(10, 15, 30, 0.35); /* Warna biru tua dengan 85% opacity */
     padding: 2rem;
     border-radius: 10px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.8); /* Optional: adds a subtle shadow */
@@ -232,6 +232,7 @@ if index_dokumen and index_qa:
             st.subheader("Jawaban")
 
             st.markdown(response.text)
+
 
 
 
