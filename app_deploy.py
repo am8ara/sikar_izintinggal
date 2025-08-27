@@ -56,10 +56,6 @@ def set_custom_style():
     '''
     st.markdown(custom_style, unsafe_allow_html=True)
 
-# Call the function to apply the style
-set_custom_style()
-# --- END OF STYLING ---
-
 # Ganti 'logo_imigrasi.png' dengan nama file logo Anda
 set_page_bg_and_style('logo_imigrasi.png')
 # --- END OF STYLING ---
@@ -230,6 +226,7 @@ if index_dokumen and index_qa:
             st.subheader("Jawaban")
 
             st.markdown(response.text)
+
 
 
 
