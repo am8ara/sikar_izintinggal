@@ -40,7 +40,7 @@ def set_jpg_as_page_bg(jpg_file):
     /* 1. Set the main page background image */
     .stApp {{
     background-image: url("data:image/jpeg;base64,{bin_str}");
-    background-size: cover;
+    background-size: contain;
     background-repeat: no-repeat;
     background-attachment: fixed;
     }}
@@ -112,7 +112,7 @@ FEW_SHOT_EXAMPLES = "--- CONTOH CARA MENJAWAB ---\nPertanyaan: Apa itu penjamin?
 @st.cache_resource
 def muat_dan_bangun_index():
     """Fungsi ini sekarang akan memuat 3 sumber data: Dokumen (PDF & PPTX), Q&A, dan Tabel."""
-    st.info("Memulai proses muat data dan pembangunan index (hanya sekali)...")
+    # st.info("Memulai proses muat data dan pembangunan index (hanya sekali)...")
     
     # 1. Proses Dokumen (PDF & PPTX)
     from langchain.text_splitter import RecursiveCharacterTextSplitter
@@ -155,7 +155,7 @@ def muat_dan_bangun_index():
     embeddings_dokumen = genai.embed_content(model="models/text-embedding-004", content=konten_dokumen, task_type="RETRIEVAL_DOCUMENT")["embedding"]
     index_dokumen = faiss.IndexFlatL2(np.array(embeddings_dokumen).shape[1])
     index_dokumen.add(np.array(embeddings_dokumen, dtype='float32'))
-    st.write(f"✅ Index Dokumen berhasil dibuat dengan {len(semua_potongan)} potongan.")
+    # st.write(f"✅ Index Dokumen berhasil dibuat dengan {len(semua_potongan)} potongan.")
 
     # 2. Proses Database Q&A
     questions_qa = []
@@ -168,9 +168,9 @@ def muat_dan_bangun_index():
     embeddings_qa = genai.embed_content(model="models/text-embedding-004", content=questions_qa, task_type="RETRIEVAL_DOCUMENT")["embedding"]
     index_qa = faiss.IndexFlatL2(np.array(embeddings_qa).shape[1])
     index_qa.add(np.array(embeddings_qa, dtype='float32'))
-    st.write("✅ Index Q&A berhasil dibuat.")
+    # st.write("✅ Index Q&A berhasil dibuat.")
     
-    st.success("Semua data berhasil dimuat dan index siap digunakan!")
+    # st.success("Semua data berhasil dimuat dan index siap digunakan!")
     return index_dokumen, semua_potongan, index_qa, DATABASE_QA
 
 def cari_info(pertanyaan, index, bank_data, tipe, top_k=2):
@@ -231,6 +231,7 @@ if index_dokumen and index_qa:
             st.subheader("Jawaban")
 
             st.markdown(response.text)
+
 
 
 
