@@ -62,7 +62,7 @@ def set_jpg_as_page_bg(jpg_file):
     st.markdown(page_bg_img_styled, unsafe_allow_html=True)
 
 # Call the function to apply the style
-set_jpg_as_page_bg('indo.png')
+set_jpg_as_page_bg('jogja.jpeg')
 # --- END OF STYLING ---
 
 # Menggunakan st.secrets untuk deploy, atau sidebar untuk input lokal
@@ -231,6 +231,7 @@ if index_dokumen and index_qa:
             st.subheader("Jawaban")
 
             st.markdown(response.text)
+
 
 
 
