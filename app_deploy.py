@@ -189,7 +189,7 @@ def cari_info(pertanyaan, index, bank_data, tipe, top_k=2):
 index_dokumen, db_dokumen, index_qa, db_qa = muat_dan_bangun_index()
 
 if index_dokumen and index_qa:
-    st.markdown("Sistem siap menjawab. Silakan ajukan pertanyaan Anda di bawah ini.")
+ #   st.markdown("Sistem siap menjawab. Silakan ajukan pertanyaan Anda di bawah ini.")
     
     pertanyaan_user = st.text_input("Ketik pertanyaan Anda tentang keimigrasian di sini:", "")
 
@@ -231,6 +231,7 @@ if index_dokumen and index_qa:
             st.subheader("Jawaban")
 
             st.markdown(response.text)
+
 
 
 
