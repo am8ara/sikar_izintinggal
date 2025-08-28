@@ -33,31 +33,36 @@ def get_base64_of_bin_file(bin_file):
         data = f.read()
     return base64.b64encode(data).decode()
 
-def set_custom_style():
-    custom_style = f'''
+def set_jpg_as_page_bg(jpg_file):
+    bin_str = get_base64_of_bin_file(jpg_file)
+    page_bg_img_styled = f'''
     <style>
-    /* 1. Set the main page background color */
+    /* 1. Set the main page background image */
     .stApp {{
-    background-color: #F46A77; /* This is the red color you requested */
+    background-image: url("data:image/jpeg;base64,{bin_str}");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     }}
 
-    /* 2. Set the font color for titles and text to black */
-    .stApp h1, .stApp .stMarkdown p {{
-    color: #000000; /* This is black */
-    }}
-
-    /* 3. Optional: Style the content container for better readability */
+    /* 2. Style the main content area for readability */
     [data-testid="stAppViewContainer"] > .main .block-container {{
-    background-color: rgba(255, 255, 255, 0.7); /* A semi-transparent white */
+    background-color: rgba(0, 0, 0, 0.6); /* Black background with 60% opacity */
     padding: 2rem;
     border-radius: 10px;
+    color: white; /* Set the text color inside the container to white */
+    }}
+
+    /* 3. Ensure title color is also visible */
+    .stApp h1 {{
+    color: white;
     }}
     </style>
     '''
-    st.markdown(custom_style, unsafe_allow_html=True)
+    st.markdown(page_bg_img_styled, unsafe_allow_html=True)
 
-# Ganti 'logo_imigrasi.png' dengan nama file logo Anda
-set_custom_style()
+# Call the function to apply the style
+set_jpg_as_page_bg('indo.png')
 # --- END OF STYLING ---
 
 # Menggunakan st.secrets untuk deploy, atau sidebar untuk input lokal
@@ -226,6 +231,7 @@ if index_dokumen and index_qa:
             st.subheader("Jawaban")
 
             st.markdown(response.text)
+
 
 
 
