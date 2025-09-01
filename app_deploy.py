@@ -191,7 +191,7 @@ index_dokumen, db_dokumen, index_qa, db_qa = muat_dan_bangun_index()
 if index_dokumen and index_qa:
  #   st.markdown("Sistem siap menjawab. Silakan ajukan pertanyaan Anda di bawah ini.")
     
-    pertanyaan_user = st.text_input("Ketik pertanyaan Anda tentang keimigrasian di sini:", "")
+    pertanyaan_user = st.text_input("Ketik pertanyaan Anda tentang Izin TInggal keimigrasian di sini:", "")
 
     if pertanyaan_user:
         with st.spinner("Menganalisis dan mencari jawaban..."):
@@ -231,6 +231,7 @@ if index_dokumen and index_qa:
             st.subheader("Jawaban")
 
             st.markdown(response.text)
+
 
 
 
