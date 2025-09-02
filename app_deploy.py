@@ -9,51 +9,36 @@ from pptx import Presentation
 import time
 import base64
 
-# --- KODE DIAGNOSIS SEMENTARA ---
-#st.subheader("Pengecekan File di Server:")
-#try:
-    # List semua file dan folder di direktori utama
-#    files_in_directory = os.listdir('.')
-#    st.code("\n".join(files_in_directory))
-#except Exception as e:
-#    st.error(f"Gagal membaca direktori: {e}")
-#st.divider()
-# --- AKHIR KODE DIAGNOSIS ---
-
 # --- Konfigurasi Halaman & API Key ---
 st.set_page_config(page_title="Sistem Pakar Imigrasi", layout="wide")
-st.title("🇮🇩 Sistem Pakar Izin Tinggal Keimigrasian Indonesia")
 
-# --- BACKGROUND SETTINGS ---
-# Replace 'background.png' with the name of your image file in the same folder.
-
+# --- BACKGROUND AND STYLING ---
 @st.cache_data
 def get_base64_of_bin_file(bin_file):
-    with open(bin_file, 'rb') as f:
-        data = f.read()
-    return base64.b64encode(data).decode()
+    try:
+        with open(bin_file, 'rb') as f:
+            data = f.read()
+        return base64.b64encode(data).decode()
+    except FileNotFoundError:
+        st.warning(f"File background '{bin_file}' tidak ditemukan.")
+        return ""
 
-def set_jpg_as_page_bg(jpg_file):
-    bin_str = get_base64_of_bin_file(jpg_file)
+def set_page_style(image_file):
+    bin_str = get_base64_of_bin_file(image_file)
     page_bg_img_styled = f'''
     <style>
-    /* 1. Set the main page background image */
     .stApp {{
     background-image: url("data:image/jpeg;base64,{bin_str}");
-    background-size: contain;
+    background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
     }}
-
-    /* 2. Style the main content area for readability */
     [data-testid="stAppViewContainer"] > .main .block-container {{
-    background-color: rgba(0, 0, 0, 0.6); /* Black background with 60% opacity */
+    background-color: rgba(0, 0, 0, 0.6);
     padding: 2rem;
     border-radius: 10px;
-    color: white; /* Set the text color inside the container to white */
+    color: white;
     }}
-
-    /* 3. Ensure title color is also visible */
     .stApp h1 {{
     color: white;
     }}
@@ -61,11 +46,13 @@ def set_jpg_as_page_bg(jpg_file):
     '''
     st.markdown(page_bg_img_styled, unsafe_allow_html=True)
 
-# Call the function to apply the style
-set_jpg_as_page_bg('jogja.jpeg')
-# --- END OF STYLING ---
+# Panggil fungsi styling
+set_page_style('jogja.jpeg')
 
-# Menggunakan st.secrets untuk deploy, atau sidebar untuk input lokal
+# --- Judul Aplikasi ---
+st.title("🇮🇩 Sistem Pakar Izin Tinggal Keimigrasian Indonesia")
+
+# --- API KEY & FOLDER SETUP ---
 try:
     GOOGLE_API_KEY = st.secrets["GOOGLE_API_KEY"]
     genai.configure(api_key=GOOGLE_API_KEY)
@@ -79,42 +66,30 @@ except (FileNotFoundError, KeyError):
         st.stop()
 
 FOLDER_DOKUMEN = 'dokumen_hukum'
-
-# --- Database Q&A (Loads all .json files from a folder) ---
 FOLDER_QA = 'qa_databases'
-DATABASE_QA = []
 
-# Check if the folder exists
+# --- LOADING DATA ---
+DATABASE_QA = []
 if os.path.isdir(FOLDER_QA):
-    # Loop through every file in the folder
     for filename in os.listdir(FOLDER_QA):
-        # Check if the file is a JSON file
         if filename.endswith('.json'):
             file_path = os.path.join(FOLDER_QA, filename)
             try:
                 with open(file_path, 'r', encoding='utf-8') as f:
-                    # Load the Q&A pairs from the file
                     qa_pairs = json.load(f)
-                    # Add them to the main database list
                     DATABASE_QA.extend(qa_pairs)
             except Exception as e:
-                st.error(f"Gagal memuat atau memproses file Q&A '{filename}': {e}")
+                st.error(f"Gagal memuat file Q&A '{filename}': {e}")
 else:
-    st.warning(f"Folder '{FOLDER_QA}' tidak ditemukan. Database Q&A tidak akan dimuat.")
+    st.warning(f"Folder '{FOLDER_QA}' tidak ditemukan.")
 
-st.sidebar.success(f"Berhasil memuat {len(DATABASE_QA)} entri Q&A dari folder '{FOLDER_QA}'.")
+st.sidebar.success(f"Berhasil memuat {len(DATABASE_QA)} entri Q&A.")
 
-# --- Contoh Statis untuk Prompt ---
 FEW_SHOT_EXAMPLES = "--- CONTOH CARA MENJAWAB ---\nPertanyaan: Apa itu penjamin?\nJawaban: Penjamin adalah orang atau korporasi yang bertanggung jawab atas keberadaan dan kegiatan Orang Asing selama berada di Wilayah Indonesia.\n--- AKHIR CONTOH ---"
 
-# --- FUNGSI-FUNGSI DENGAN CACHING UNTUK DEPLOYMENT ---
-
+# --- FUNGSI UTAMA (DENGAN CACHING) ---
 @st.cache_resource
 def muat_dan_bangun_index():
-    """Fungsi ini sekarang akan memuat 3 sumber data: Dokumen (PDF & PPTX), Q&A, dan Tabel."""
-    # st.info("Memulai proses muat data dan pembangunan index (hanya sekali)...")
-    
-    # 1. Proses Dokumen (PDF & PPTX)
     from langchain.text_splitter import RecursiveCharacterTextSplitter
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=2000, chunk_overlap=400)
     semua_potongan = []
@@ -122,69 +97,45 @@ def muat_dan_bangun_index():
     for filename in os.listdir(FOLDER_DOKUMEN):
         teks_lengkap = ""
         file_path = os.path.join(FOLDER_DOKUMEN, filename)
-        
         try:
-            # Handle PDF files
             if filename.endswith('.pdf'):
                 reader = PdfReader(file_path)
                 teks_lengkap = "".join(page.extract_text() or "" for page in reader.pages)
-            
-            # --- BAGIAN BARU: Handle PowerPoint files ---
             elif filename.endswith('.pptx'):
                 prs = Presentation(file_path)
                 for slide in prs.slides:
                     for shape in slide.shapes:
                         if hasattr(shape, "text"):
                             teks_lengkap += shape.text + "\n"
-            # -------------------------------------------
-
             if teks_lengkap:
                 potongan_teks = text_splitter.split_text(teks_lengkap)
                 for pot in potongan_teks:
                     semua_potongan.append({"sumber": filename, "konten": pot})
-
         except Exception as e:
             st.warning(f"Gagal memproses file {filename}: {e}")
     
     if not semua_potongan:
         st.error("Tidak ada dokumen yang bisa diproses.")
-        # Return enough None values to match the expected output
         return None, None, None, None
 
     konten_dokumen = [doc['konten'] for doc in semua_potongan]
     embeddings_dokumen = genai.embed_content(model="models/text-embedding-004", content=konten_dokumen, task_type="RETRIEVAL_DOCUMENT")["embedding"]
     index_dokumen = faiss.IndexFlatL2(np.array(embeddings_dokumen).shape[1])
     index_dokumen.add(np.array(embeddings_dokumen, dtype='float32'))
-    # st.write(f"✅ Index Dokumen berhasil dibuat dengan {len(semua_potongan)} potongan.")
 
-    # 2. Proses Database Q&A
     texts_to_embed = []
     for item in DATABASE_QA:
-        # Check for the "pertanyaan" key first
         if "pertanyaan" in item and item["pertanyaan"]:
             texts_to_embed.append(item["pertanyaan"])
-        # If not found, check for the "kata_kunci" key
         elif "kata_kunci" in item and item["kata_kunci"]:
             texts_to_embed.append(item["kata_kunci"])
-        else:
-        # Only show a warning if neither valid key is found
-            st.warning(f"Melewatkan entri (tidak ada 'pertanyaan' atau 'kata_kunci' yang valid): {item}")
-# Now, create embeddings from the combined list of questions and keywords
-if texts_to_embed:
-    embeddings_qa = genai.embed_content(model="models/text-embedding-004", content=texts_to_embed, task_type="RETRIEVAL_DOCUMENT")["embedding"]
-    index_qa = faiss.IndexFlatL2(np.array(embeddings_qa).shape[1])
-    index_qa.add(np.array(embeddings_qa, dtype='float32'))
-    st.write("✅ Index Q&A / Glosarium berhasil dibuat.")
-else:
-    # Handle case where there's no valid Q&A data at all
+
     index_qa = None
-    st.warning("Tidak ada data Q&A atau Glosarium yang valid untuk di-index.")
-    embeddings_qa = genai.embed_content(model="models/text-embedding-004", content=questions_qa, task_type="RETRIEVAL_DOCUMENT")["embedding"]
-    index_qa = faiss.IndexFlatL2(np.array(embeddings_qa).shape[1])
-    index_qa.add(np.array(embeddings_qa, dtype='float32'))
-    # st.write("✅ Index Q&A berhasil dibuat.")
-    
-    # st.success("Semua data berhasil dimuat dan index siap digunakan!")
+    if texts_to_embed:
+        embeddings_qa = genai.embed_content(model="models/text-embedding-004", content=texts_to_embed, task_type="RETRIEVAL_DOCUMENT")["embedding"]
+        index_qa = faiss.IndexFlatL2(np.array(embeddings_qa).shape[1])
+        index_qa.add(np.array(embeddings_qa, dtype='float32'))
+
     return index_dokumen, semua_potongan, index_qa, DATABASE_QA
 
 def cari_info(pertanyaan, index, bank_data, tipe, top_k=2):
@@ -194,42 +145,39 @@ def cari_info(pertanyaan, index, bank_data, tipe, top_k=2):
     if tipe == "dokumen":
         return "\n---\n".join([f"Kutipan dari {doc['sumber']}:\n{doc['konten']}" for doc in hasil])
     elif tipe == "qa":
-        return "\n---\n".join([f"Pertanyaan Serupa: {doc['pertanyaan']}\nJawaban yang Disarankan: {doc['jawaban']}" for doc in hasil])
+        # Check if the keys exist before accessing them
+        qa_results = []
+        for doc in hasil:
+            q = doc.get('pertanyaan', doc.get('kata_kunci', ''))
+            a = doc.get('jawaban', doc.get('definisi', ''))
+            qa_results.append(f"Pertanyaan Serupa: {q}\nJawaban yang Disarankan: {a}")
+        return "\n---\n".join(qa_results)
     return ""
 
 # --- ALUR UTAMA APLIKASI WEB ---
-
-# Muat semua data menggunakan fungsi cache
 index_dokumen, db_dokumen, index_qa, db_qa = muat_dan_bangun_index()
 
-if index_dokumen and index_qa:
- #   st.markdown("Sistem siap menjawab. Silakan ajukan pertanyaan Anda di bawah ini.")
-    
-    pertanyaan_user = st.text_input("Ketik pertanyaan Anda tentang Izin TInggal keimigrasian di sini:", "")
-
+if index_dokumen:
+    pertanyaan_user = st.text_input("Ketik pertanyaan Anda tentang Izin Tinggal keimigrasian di sini:", "")
     if pertanyaan_user:
         with st.spinner("Menganalisis dan mencari jawaban..."):
-            # 1. Lakukan pencarian ganda
             konteks_dokumen = cari_info(pertanyaan_user, index_dokumen, db_dokumen, "dokumen", top_k=2)
-            konteks_qa = cari_info(pertanyaan_user, index_qa, db_qa, "qa", top_k=1)
+            konteks_qa = ""
+            if index_qa:
+                konteks_qa = cari_info(pertanyaan_user, index_qa, db_qa, "qa", top_k=1)
             
-            # 2. Susun Prompt Hibrida
             prompt = f"""
-            Anda adalah Sistem Pakar Keimigrasian Indonesia. Jawab pertanyaan pengguna dengan akurat, jelas, dan relevan berdasarkan informasi yang tersedia.
-            Prioritaskan informasi dari "KONTEKS DARI JAWABAN SERUPA". Gunakan "KONTEKS DARI DOKUMEN HUKUM" sebagai pendukung.
-            Tiru gaya jawaban dari "CONTOH CARA MENJAWAB".
+            Anda adalah Sistem Pakar Keimigrasian Indonesia...
+            (Sisa prompt Anda sama seperti sebelumnya)
 
             {FEW_SHOT_EXAMPLES}
 
             --- KONTEKS YANG DITEMUKAN ---
             [KONTEKS DARI JAWABAN SERUPA YANG SUDAH ADA]
             {konteks_qa}
-
             [KONTEKS DARI DOKUMEN HUKUM]
             {konteks_dokumen}
             --- AKHIR KONTEKS ---
-
-            Berdasarkan semua informasi di atas, jawablah pertanyaan pengguna berikut.
 
             PERTANYAAN PENGGUNA:
             {pertanyaan_user}
@@ -237,37 +185,9 @@ if index_dokumen and index_qa:
             JAWABAN PAKAR:
             """
             
-            # 3. Hasilkan Jawaban
             model = genai.GenerativeModel('gemini-1.5-flash')
             response = model.generate_content(prompt)
             
             st.divider()
             st.subheader("Jawaban")
-
             st.markdown(response.text)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
