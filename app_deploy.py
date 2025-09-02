@@ -160,15 +160,15 @@ def muat_dan_bangun_index():
     # 2. Proses Database Q&A
     texts_to_embed = []
     for item in DATABASE_QA:
-    # Check for the "pertanyaan" key first
-    if "pertanyaan" in item and item["pertanyaan"]:
-        texts_to_embed.append(item["pertanyaan"])
-    # If not found, check for the "kata_kunci" key
-    elif "kata_kunci" in item and item["kata_kunci"]:
-        texts_to_embed.append(item["kata_kunci"])
-    else:
+        # Check for the "pertanyaan" key first
+        if "pertanyaan" in item and item["pertanyaan"]:
+            texts_to_embed.append(item["pertanyaan"])
+        # If not found, check for the "kata_kunci" key
+        elif "kata_kunci" in item and item["kata_kunci"]:
+            texts_to_embed.append(item["kata_kunci"])
+        else:
         # Only show a warning if neither valid key is found
-        st.warning(f"Melewatkan entri (tidak ada 'pertanyaan' atau 'kata_kunci' yang valid): {item}")
+            st.warning(f"Melewatkan entri (tidak ada 'pertanyaan' atau 'kata_kunci' yang valid): {item}")
 # Now, create embeddings from the combined list of questions and keywords
 if texts_to_embed:
     embeddings_qa = genai.embed_content(model="models/text-embedding-004", content=texts_to_embed, task_type="RETRIEVAL_DOCUMENT")["embedding"]
@@ -245,6 +245,7 @@ if index_dokumen and index_qa:
             st.subheader("Jawaban")
 
             st.markdown(response.text)
+
 
 
 
