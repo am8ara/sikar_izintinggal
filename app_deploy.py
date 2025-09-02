@@ -158,13 +158,27 @@ def muat_dan_bangun_index():
     # st.write(f"✅ Index Dokumen berhasil dibuat dengan {len(semua_potongan)} potongan.")
 
     # 2. Proses Database Q&A
-    questions_qa = []
+    texts_to_embed = []
     for item in DATABASE_QA:
-    # This whole block is now indented inside the for loop
-        if "pertanyaan" in item and item["pertanyaan"]:
-            questions_qa.append(item["pertanyaan"])
-        else:
-            st.warning(f"Melewatkan entri Q&A yang tidak valid atau kosong: {item}")
+    # Check for the "pertanyaan" key first
+    if "pertanyaan" in item and item["pertanyaan"]:
+        texts_to_embed.append(item["pertanyaan"])
+    # If not found, check for the "kata_kunci" key
+    elif "kata_kunci" in item and item["kata_kunci"]:
+        texts_to_embed.append(item["kata_kunci"])
+    else:
+        # Only show a warning if neither valid key is found
+        st.warning(f"Melewatkan entri (tidak ada 'pertanyaan' atau 'kata_kunci' yang valid): {item}")
+# Now, create embeddings from the combined list of questions and keywords
+if texts_to_embed:
+    embeddings_qa = genai.embed_content(model="models/text-embedding-004", content=texts_to_embed, task_type="RETRIEVAL_DOCUMENT")["embedding"]
+    index_qa = faiss.IndexFlatL2(np.array(embeddings_qa).shape[1])
+    index_qa.add(np.array(embeddings_qa, dtype='float32'))
+    st.write("✅ Index Q&A / Glosarium berhasil dibuat.")
+else:
+    # Handle case where there's no valid Q&A data at all
+    index_qa = None
+    st.warning("Tidak ada data Q&A atau Glosarium yang valid untuk di-index.")
     embeddings_qa = genai.embed_content(model="models/text-embedding-004", content=questions_qa, task_type="RETRIEVAL_DOCUMENT")["embedding"]
     index_qa = faiss.IndexFlatL2(np.array(embeddings_qa).shape[1])
     index_qa.add(np.array(embeddings_qa, dtype='float32'))
@@ -231,6 +245,7 @@ if index_dokumen and index_qa:
             st.subheader("Jawaban")
 
             st.markdown(response.text)
+
 
 
 
