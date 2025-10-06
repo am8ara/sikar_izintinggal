@@ -185,9 +185,10 @@ if index_dokumen:
             JAWABAN PAKAR:
             """
             
-            model = genai.GenerativeModel('gemini-1.5-flash')
+            model = genai.GenerativeModel('gemini-pro')
             response = model.generate_content(prompt)
             
             st.divider()
             st.subheader("Jawaban")
             st.markdown(response.text)
+
